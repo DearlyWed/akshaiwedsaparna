@@ -138,16 +138,6 @@ button:hover {
     border-radius: 20px;
 }
 
-/* Wishes */
-input, textarea {
-    width: 80%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 12px;
-    border: 1px solid #e0c3cc;
-    font-family: 'Poppins', sans-serif;
-}
-
 .footer {
     background: #b76e79;
     color: white;
@@ -207,9 +197,9 @@ input, textarea {
 <div class="section">
     <h2>Our Beautiful Moments</h2>
     <div class="gallery">
-        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg" onclick="openLightbox(this.src)">
-    <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg" onclick="openLightbox(this.src)">
-    <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/image03.jpg" onclick="openLightbox(this.src)">
+        <img src="images/photo1.jpg" onclick="openLightbox(this.src)">
+        <img src="images/photo2.jpg" onclick="openLightbox(this.src)">
+        <img src="images/photo3.jpg" onclick="openLightbox(this.src)">
     </div>
 </div>
 
@@ -222,10 +212,10 @@ input, textarea {
 <div class="section">
     <div class="card">
         <h2>Send Your Wishes</h2>
-        <input type="text" id="name" placeholder="Your Name">
-        <textarea id="message" rows="4" placeholder="Write your blessings..."></textarea><br>
-        <button onclick="saveWish()">Send Wishes</button>
-        <div id="wishList"></div>
+        <p>Click the button below to send your blessings 💕</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScHiQJ4wIrwhmFNy91EpfOXuqhqjD1wj7bF8OCtpldXzljRHQ/viewform?usp=publish-editor" target="_blank">
+            <button>Send Your Wishes</button>
+        </a>
     </div>
 </div>
 
@@ -235,8 +225,7 @@ input, textarea {
 </div>
 
 <script>
-
-// Scroll animation
+// Scroll Animation
 const sections = document.querySelectorAll('.section');
 window.addEventListener('scroll', () => {
     sections.forEach(sec => {
@@ -271,26 +260,7 @@ function openLightbox(src) {
 function closeLightbox() {
     document.getElementById("lightbox").style.display = "none";
 }
-
-// Wishes
-function saveWish() {
-    const name = document.getElementById("name").value;
-    const message = document.getElementById("message").value;
-
-    if(name && message) {
-        const wishList = document.getElementById("wishList");
-        const newWish = document.createElement("p");
-        newWish.innerHTML = "<strong>" + name + ":</strong> " + message;
-        wishList.appendChild(newWish);
-
-        document.getElementById("name").value = "";
-        document.getElementById("message").value = "";
-    }
-}
-
 </script>
 
 </body>
 </html>
-
-
