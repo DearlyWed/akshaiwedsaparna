@@ -194,7 +194,6 @@ button:hover {
 <div class="section">
     <div class="card">
         <h2>Reception Celebration</h2>
-        <p>Hosted by the Groom's Family</p>
         <p><strong>05 April 2026</strong></p>
         <p>05:30 PM – 09:30 PM</p>
         <p>St. Thomas Convention Centre, Inchoor</p>
@@ -207,8 +206,9 @@ button:hover {
 <!-- CEREMONY -->
 <div class="section">
     <div class="card">
-        <h2>Wedding Ceremony</h2>
-        <p>P K Karunakaran Memorial Community Hall</p>
+	<h2>Wedding Ceremony</h2>
+        <p><strong>Venue:</strong> P K Karunakaran Memorial Community Hall</p>
+        <p><strong>Time:</strong> 10:00 AM</p>
         <a href="https://maps.app.goo.gl/jyG94ZrLs3vsNKvT7" target="_blank">
             <button>View Wedding Location</button>
         </a>
@@ -223,7 +223,7 @@ button:hover {
 
 <!-- GALLERY -->
 <div class="section">
-    <h2>Our Beautiful Moments</h2>
+    <h2>Our Engagement Moments</h2>
     <div class="gallery">
         <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg" onclick="openLightbox(this.src)">
         <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg" onclick="openLightbox(this.src)">
@@ -276,4 +276,50 @@ setInterval(function() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
 
-    const
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    countdownElement.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
+}, 1000);
+
+// Lightbox
+function openLightbox(src) {
+    document.getElementById("lightbox").style.display = "block";
+    document.getElementById("lightbox-img").src = src;
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+// Background Music Autoplay & Control
+const music = document.getElementById('bg-music');
+const musicBtn = document.getElementById('music-control');
+
+window.addEventListener('load', () => {
+    music.play().catch(() => {
+        console.log("Autoplay blocked. Click the button to start music.");
+    });
+});
+
+musicBtn.addEventListener('click', () => {
+    if(music.paused){
+        music.play();
+        musicBtn.textContent = "⏸️";
+    } else {
+        music.pause();
+        musicBtn.textContent = "▶️";
+    }
+});
+
+// Change button icon based on initial state
+if(!music.paused){
+    musicBtn.textContent = "⏸️";
+} else {
+    musicBtn.textContent = "▶️";
+}
+</script>
+
+</body>
+</html>
