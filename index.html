@@ -160,6 +160,7 @@ button:hover {
     background: #b76e79;
     color: white;
     padding: 25px;
+    font-size: 16px;
 }
 
 @media(max-width:768px){
@@ -177,6 +178,16 @@ button:hover {
     <p>With the blessings of our elders</p>
     <h1>Akshai & Aparna</h1>
     <p>05 April 2026</p>
+</div>
+
+<!-- WELCOME NOTE -->
+<div class="section">
+    <div class="card">
+        <h2>Welcome to Our Celebration</h2>
+        <p>Dear Family & Friends,</p>
+        <p>We are thrilled to have you join us on this special day. Your presence makes our celebration even more joyful. Let's make memories together filled with love, laughter, and happiness!</p>
+        <p style="font-family:'Great Vibes', cursive; font-size:28px; color:#b76e79;">With love, <br> Akshai & Aparna 💕</p>
+    </div>
 </div>
 
 <!-- RECEPTION -->
@@ -265,50 +276,4 @@ setInterval(function() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-    countdownElement.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
-}, 1000);
-
-// Lightbox
-function openLightbox(src) {
-    document.getElementById("lightbox").style.display = "block";
-    document.getElementById("lightbox-img").src = src;
-}
-
-function closeLightbox() {
-    document.getElementById("lightbox").style.display = "none";
-}
-
-// Background Music Autoplay & Control
-const music = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-control');
-
-window.addEventListener('load', () => {
-    music.play().catch(() => {
-        console.log("Autoplay blocked. Click the button to start music.");
-    });
-});
-
-musicBtn.addEventListener('click', () => {
-    if(music.paused){
-        music.play();
-        musicBtn.textContent = "⏸️";
-    } else {
-        music.pause();
-        musicBtn.textContent = "▶️";
-    }
-});
-
-// Change button icon based on initial state
-if(!music.paused){
-    musicBtn.textContent = "⏸️";
-} else {
-    musicBtn.textContent = "▶️";
-}
-</script>
-
-</body>
-</html>
+    const
