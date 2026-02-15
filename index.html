@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -138,6 +137,25 @@ button:hover {
     border-radius: 20px;
 }
 
+/* Floating Music Control Button */
+#music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #b76e79;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(183,110,121,0.3);
+    transition: 0.4s;
+}
+#music-control:hover {
+    background: #9c5a65;
+}
+
 .footer {
     background: #b76e79;
     color: white;
@@ -149,7 +167,6 @@ button:hover {
         font-size: 55px;
     }
 }
-
 </style>
 </head>
 
@@ -224,6 +241,10 @@ button:hover {
     Family of Akshai
 </div>
 
+<!-- Background Music -->
+<audio id="bg-music" src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Music01.mp3" loop></audio>
+<button id="music-control">⏯️</button>
+
 <script>
 // Scroll Animation
 const sections = document.querySelectorAll('.section');
@@ -260,8 +281,34 @@ function openLightbox(src) {
 function closeLightbox() {
     document.getElementById("lightbox").style.display = "none";
 }
+
+// Background Music Autoplay & Control
+const music = document.getElementById('bg-music');
+const musicBtn = document.getElementById('music-control');
+
+window.addEventListener('load', () => {
+    music.play().catch(() => {
+        console.log("Autoplay blocked. Click the button to start music.");
+    });
+});
+
+musicBtn.addEventListener('click', () => {
+    if(music.paused){
+        music.play();
+        musicBtn.textContent = "⏸️";
+    } else {
+        music.pause();
+        musicBtn.textContent = "▶️";
+    }
+});
+
+// Change button icon based on initial state
+if(!music.paused){
+    musicBtn.textContent = "⏸️";
+} else {
+    musicBtn.textContent = "▶️";
+}
 </script>
 
 </body>
 </html>
-
