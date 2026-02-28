@@ -85,14 +85,12 @@ button:hover {
     background: #9c5a65;
 }
 
-/* Countdown */
 .countdown {
     font-size: 24px;
     margin-top: 20px;
     color: #b76e79;
 }
 
-/* Romantic Gallery */
 .gallery {
     display: flex;
     justify-content: center;
@@ -112,11 +110,8 @@ button:hover {
 
 .gallery img:hover {
     transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(183,110,121,0.4);
-    filter: brightness(1.05);
 }
 
-/* Lightbox */
 .lightbox {
     display: none;
     position: fixed;
@@ -137,36 +132,44 @@ button:hover {
     border-radius: 20px;
 }
 
-/* Floating Music Control Button */
-#music-control {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #b76e79;
-    color: white;
-    border: none;
-    padding: 12px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 5px 20px rgba(183,110,121,0.3);
-    transition: 0.4s;
+/* Wishes Box */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 15px;
+    border: 1px solid #e6cbd1;
+    font-family: 'Poppins', sans-serif;
 }
-#music-control:hover {
-    background: #9c5a65;
+
+textarea {
+    height: 90px;
+    resize: none;
+}
+
+.wishes-list {
+    margin-top: 30px;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.wish {
+    background: rgba(255, 240, 245, 0.6);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(183,110,121,0.15);
 }
 
 .footer {
     background: #b76e79;
     color: white;
     padding: 25px;
-    font-size: 16px;
 }
 
 @media(max-width:768px){
-    .hero h1 {
-        font-size: 55px;
-    }
+    .hero h1 { font-size: 55px; }
 }
 </style>
 </head>
@@ -180,147 +183,74 @@ button:hover {
     <p>05 April 2026</p>
 </div>
 
-<!-- WELCOME NOTE -->
+<!-- LIVE WISHES -->
 <div class="section">
     <div class="card">
-        <h2>Welcome to Our Celebration</h2>
-        <p>Dear Family & Friends,</p>
-        <p>We are thrilled to have you join us on this special day. Your presence makes our celebration even more joyful. Let's make memories together filled with love, laughter, and happiness!</p>
-        <p style="font-family:'Great Vibes', cursive; font-size:28px; color:#b76e79;">With love, <br> Akshai & Aparna 💕</p>
-    </div>
-</div>
-
-<!-- RECEPTION -->
-<div class="section">
-    <div class="card">
-        <h2>Reception Celebration</h2>
-        <p><strong>05 April 2026</strong></p>
-        <p>05:30 PM – 09:30 PM</p>
-        <p>St. Thomas Convention Centre, Inchoor</p>
-        <a href="https://maps.app.goo.gl/ePHivT7r5GMEEMCY8" target="_blank">
-            <button>View Reception Location</button>
-        </a>
-    </div>
-</div>
-
-<!-- CEREMONY -->
-<div class="section">
-    <div class="card">
-	<h2>Wedding Ceremony</h2>
-        <p><strong>Venue:</strong> P K Karunakaran Memorial Community Hall</p>
-        <p><strong>Time:</strong> 10:00 AM</p>
-        <a href="https://maps.app.goo.gl/jyG94ZrLs3vsNKvT7" target="_blank">
-            <button>View Wedding Location</button>
-        </a>
-    </div>
-</div>
-
-<!-- COUNTDOWN -->
-<div class="section">
-    <h2>Counting Down to Forever</h2>
-    <div class="countdown" id="countdown"></div>
-</div>
-
-<!-- GALLERY -->
-<div class="section">
-    <h2>Our Engagement Moments</h2>
-    <div class="gallery">
-        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg" onclick="openLightbox(this.src)">
-        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg" onclick="openLightbox(this.src)">
-        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/image03.jpg" onclick="openLightbox(this.src)">
-    </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <img id="lightbox-img">
-</div>
-
-<!-- WISHES -->
-<div class="section">
-    <div class="card">
-        <h2>Send Your Wishes</h2>
-        <p>Click the button below to send your blessings 💕</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScHiQJ4wIrwhmFNy91EpfOXuqhqjD1wj7bF8OCtpldXzljRHQ/viewform?usp=publish-editor" target="_blank">
-            <button>Send Your Wishes</button>
-        </a>
+        <h2>Send Your Wishes 💕</h2>
+        <input type="text" id="name" placeholder="Your Name">
+        <textarea id="message" placeholder="Write your blessing..."></textarea>
+        <button onclick="sendWish()">Send Wish</button>
+        <div id="wishes-list" class="wishes-list"></div>
     </div>
 </div>
 
 <div class="footer">
-    We look forward to celebrating with you ❤️ <br>
-    Cousins & Famiy
+    We look forward to celebrating with you ❤️
 </div>
 
-<!-- Background Music -->
-<audio id="bg-music" src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Music01.mp3" loop></audio>
-<button id="music-control">⏯️</button>
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded, serverTimestamp } 
+from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
-<script>
-// Scroll Animation
-const sections = document.querySelectorAll('.section');
-window.addEventListener('scroll', () => {
-    sections.forEach(sec => {
-        const rect = sec.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 100){
-            sec.classList.add('show');
-        }
-    });
-});
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "akshai-aparna-wedding.firebaseapp.com",
+  databaseURL: "https://akshai-aparna-wedding-default-rtdb.firebaseio.com",
+  projectId: "akshai-aparna-wedding",
+  storageBucket: "akshai-aparna-wedding.firebasestorage.app",
+  messagingSenderId: "336537700289",
+  appId: "1:336537700289:web:ff966a27768443b3fa5140"
+};
 
-// Countdown
-const weddingDate = new Date("April 05, 2026 17:30:00").getTime();
-const countdownElement = document.getElementById("countdown");
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-setInterval(function() {
-    const now = new Date().getTime();
-    const distance = weddingDate - now;
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-    countdownElement.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
-}, 1000);
-
-// Lightbox
-function openLightbox(src) {
-    document.getElementById("lightbox").style.display = "block";
-    document.getElementById("lightbox-img").src = src;
-}
-
-function closeLightbox() {
-    document.getElementById("lightbox").style.display = "none";
-}
-
-// Background Music Autoplay & Control
-const music = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-control');
-
-window.addEventListener('load', () => {
-    music.play().catch(() => {
-        console.log("Autoplay blocked. Click the button to start music.");
-    });
-});
-
-musicBtn.addEventListener('click', () => {
-    if(music.paused){
-        music.play();
-        musicBtn.textContent = "⏸️";
-    } else {
-        music.pause();
-        musicBtn.textContent = "▶️";
+window.sendWish = function() {
+    const name = document.getElementById("name").value.trim();
+    const message = document.getElementById("message").value.trim();
+    if(name === "" || message === "") {
+        alert("Please fill in both fields ❤️");
+        return;
     }
-});
+    push(ref(db, "wishes"), {
+        name: name,
+        message: message,
+        time: serverTimestamp()
+    });
+    document.getElementById("name").value = "";
+    document.getElementById("message").value = "";
+};
 
-// Change button icon based on initial state
-if(!music.paused){
-    musicBtn.textContent = "⏸️";
-} else {
-    musicBtn.textContent = "▶️";
-}
+const wishesList = document.getElementById("wishes-list");
+
+onChildAdded(ref(db, "wishes"), (snapshot) => {
+    const wish = snapshot.val();
+    const wishDiv = document.createElement("div");
+    wishDiv.classList.add("wish");
+
+    const date = wish.time ? new Date(wish.time).toLocaleString() : "";
+
+    wishDiv.innerHTML = `
+        <strong>${wish.name}</strong>
+        <div style="font-size:12px; opacity:0.6;">${date}</div>
+        <div>${wish.message}</div>
+    `;
+
+    wishesList.prepend(wishDiv);
+});
 </script>
 
 </body>
 </html>
-
