@@ -85,12 +85,14 @@ button:hover {
     background: #9c5a65;
 }
 
+/* Countdown */
 .countdown {
     font-size: 24px;
     margin-top: 20px;
     color: #b76e79;
 }
 
+/* Romantic Gallery */
 .gallery {
     display: flex;
     justify-content: center;
@@ -110,8 +112,11 @@ button:hover {
 
 .gallery img:hover {
     transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(183,110,121,0.4);
+    filter: brightness(1.05);
 }
 
+/* Lightbox */
 .lightbox {
     display: none;
     position: fixed;
@@ -132,123 +137,262 @@ button:hover {
     border-radius: 20px;
 }
 
-/* Wishes Box */
-input, textarea {
-    width: 100%;
+/* Floating Music Control Button */
+#music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #b76e79;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(183,110,121,0.3);
+    transition: 0.4s;
+}
+#music-control:hover {
+    background: #9c5a65;
+}
+
+/* Wishes Box Styling */
+#wish-form input, #wish-form textarea {
+    width: 90%;
     padding: 12px;
-    margin: 10px 0;
-    border-radius: 15px;
-    border: 1px solid #e6cbd1;
+    margin: 8px 0;
+    border: 1px solid #e0c5c9;
+    border-radius: 10px;
     font-family: 'Poppins', sans-serif;
 }
 
-textarea {
-    height: 90px;
-    resize: none;
-}
-
-.wishes-list {
+#wishes-container {
     margin-top: 30px;
-    text-align: left;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
+    text-align: left;
+    padding: 10px;
 }
 
-.wish {
-    background: rgba(255, 240, 245, 0.6);
+.wish-card {
+    background: white;
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(183,110,121,0.15);
+    border-left: 5px solid #b76e79;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.wish-name {
+    font-weight: 600;
+    color: #b76e79;
+    display: block;
+}
+
+.wish-text {
+    font-size: 14px;
+    color: #555;
 }
 
 .footer {
     background: #b76e79;
     color: white;
     padding: 25px;
+    font-size: 16px;
 }
 
 @media(max-width:768px){
-    .hero h1 { font-size: 55px; }
+    .hero h1 {
+        font-size: 55px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
 <div class="hero">
     <p>With the blessings of our elders</p>
     <h1>Akshai & Aparna</h1>
     <p>05 April 2026</p>
 </div>
 
-<!-- LIVE WISHES -->
 <div class="section">
     <div class="card">
-        <h2>Send Your Wishes 💕</h2>
-        <input type="text" id="name" placeholder="Your Name">
-        <textarea id="message" placeholder="Write your blessing..."></textarea>
-        <button onclick="sendWish()">Send Wish</button>
-        <div id="wishes-list" class="wishes-list"></div>
+        <h2>Welcome to Our Celebration</h2>
+        <p>Dear Family & Friends,</p>
+        <p>We are thrilled to have you join us on this special day. Your presence makes our celebration even more joyful. Let's make memories together filled with love, laughter, and happiness!</p>
+        <p style="font-family:'Great Vibes', cursive; font-size:28px; color:#b76e79;">With love, <br> Akshai & Aparna 💕</p>
+    </div>
+</div>
+
+<div class="section">
+    <div class="card">
+        <h2>Reception Celebration</h2>
+        <p><strong>05 April 2026</strong></p>
+        <p>05:30 PM – 09:30 PM</p>
+        <p>St. Thomas Convention Centre, Inchoor</p>
+        <a href="https://maps.app.goo.gl/ePHivT7r5GMEEMCY8" target="_blank">
+            <button>View Reception Location</button>
+        </a>
+    </div>
+</div>
+
+<div class="section">
+    <div class="card">
+	<h2>Wedding Ceremony</h2>
+        <p><strong>Venue:</strong> P K Karunakaran Memorial Community Hall</p>
+        <p><strong>Time:</strong> 10:00 AM</p>
+        <a href="https://maps.app.goo.gl/jyG94ZrLs3vsNKvT7" target="_blank">
+            <button>View Wedding Location</button>
+        </a>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Counting Down to Forever</h2>
+    <div class="countdown" id="countdown"></div>
+</div>
+
+<div class="section">
+    <h2>Our Engagement Moments</h2>
+    <div class="gallery">
+        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image01.jpg" onclick="openLightbox(this.src)">
+        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Image02.jpg" onclick="openLightbox(this.src)">
+        <img src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/image03.jpg" onclick="openLightbox(this.src)">
+    </div>
+</div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img">
+</div>
+
+<div class="section">
+    <div class="card">
+        <h2>Send Your Wishes</h2>
+        <form id="wish-form">
+            <input type="text" id="guest-name" placeholder="Your Name" required>
+            <textarea id="guest-message" rows="3" placeholder="Write your blessings here..." required></textarea>
+            <button type="submit" id="submit-wish">Send Wishes 💕</button>
+        </form>
+
+        <div id="wishes-container">
+            </div>
     </div>
 </div>
 
 <div class="footer">
-    We look forward to celebrating with you ❤️
+    We look forward to celebrating with you ❤️ <br>
+    Cousins & Family
 </div>
 
-<!-- FIREBASE SCRIPT -->
+<audio id="bg-music" src="https://raw.githubusercontent.com/DearlyWed/akshaiwedsaparna/main/Music01.mp3" loop></audio>
+<button id="music-control">⏯️</button>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, serverTimestamp } 
-from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "akshai-aparna-wedding.firebaseapp.com",
-  databaseURL: "https://akshai-aparna-wedding-default-rtdb.firebaseio.com",
-  projectId: "akshai-aparna-wedding",
-  storageBucket: "akshai-aparna-wedding.firebasestorage.app",
-  messagingSenderId: "336537700289",
-  appId: "1:336537700289:web:ff966a27768443b3fa5140"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDwVLKxnijGJKqDo56MS8kdi-0v6qishJQ",
+    authDomain: "akshai-aparna-wedding.firebaseapp.com",
+    databaseURL: "https://akshai-aparna-wedding-default-rtdb.firebaseio.com",
+    projectId: "akshai-aparna-wedding",
+    storageBucket: "akshai-aparna-wedding.firebasestorage.app",
+    messagingSenderId: "336537700289",
+    appId: "1:336537700289:web:ff966a27768443b3fa5140"
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const wishesRef = ref(db, 'wishes');
 
-window.sendWish = function() {
-    const name = document.getElementById("name").value.trim();
-    const message = document.getElementById("message").value.trim();
-    if(name === "" || message === "") {
-        alert("Please fill in both fields ❤️");
-        return;
-    }
-    push(ref(db, "wishes"), {
-        name: name,
-        message: message,
-        time: serverTimestamp()
+  // Handle Form Submission
+  const wishForm = document.getElementById('wish-form');
+  wishForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('guest-name').value;
+    const message = document.getElementById('guest-message').value;
+
+    push(wishesRef, {
+      name: name,
+      message: message,
+      timestamp: serverTimestamp()
+    }).then(() => {
+        wishForm.reset();
     });
-    document.getElementById("name").value = "";
-    document.getElementById("message").value = "";
-};
+  });
 
-const wishesList = document.getElementById("wishes-list");
+  // Fetch and Display Wishes Live
+  const wishesContainer = document.getElementById('wishes-container');
+  onValue(wishesRef, (snapshot) => {
+    wishesContainer.innerHTML = "";
+    const data = snapshot.val();
+    if (data) {
+        // Convert to array and reverse to show newest first
+        const entries = Object.values(data).reverse();
+        entries.forEach(wish => {
+            const div = document.createElement('div');
+            div.className = 'wish-card';
+            div.innerHTML = `<span class="wish-name">${wish.name}</span><span class="wish-text">${wish.message}</span>`;
+            wishesContainer.appendChild(div);
+        });
+    } else {
+        wishesContainer.innerHTML = "<p style='text-align:center; color:#999;'>No wishes yet. Be the first!</p>";
+    }
+  });
+</script>
 
-onChildAdded(ref(db, "wishes"), (snapshot) => {
-    const wish = snapshot.val();
-    const wishDiv = document.createElement("div");
-    wishDiv.classList.add("wish");
+<script>
+// Scroll Animation
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+    sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 100){
+            sec.classList.add('show');
+        }
+    });
+});
 
-    const date = wish.time ? new Date(wish.time).toLocaleString() : "";
+// Countdown
+const weddingDate = new Date("April 05, 2026 17:30:00").getTime();
+const countdownElement = document.getElementById("countdown");
 
-    wishDiv.innerHTML = `
-        <strong>${wish.name}</strong>
-        <div style="font-size:12px; opacity:0.6;">${date}</div>
-        <div>${wish.message}</div>
-    `;
+setInterval(function() {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
 
-    wishesList.prepend(wishDiv);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    countdownElement.innerHTML = days + " Days " + hours + " Hours " + minutes + " Minutes";
+}, 1000);
+
+// Lightbox
+function openLightbox(src) {
+    document.getElementById("lightbox").style.display = "block";
+    document.getElementById("lightbox-img").src = src;
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+// Background Music Autoplay & Control
+const music = document.getElementById('bg-music');
+const musicBtn = document.getElementById('music-control');
+
+musicBtn.addEventListener('click', () => {
+    if(music.paused){
+        music.play();
+        musicBtn.textContent = "⏸️";
+    } else {
+        music.pause();
+        musicBtn.textContent = "▶️";
+    }
 });
 </script>
 
